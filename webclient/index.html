@@ -4,8 +4,20 @@
   <meta charset="utf-8" />
   <title>WebRTC Demo</title>
   <script type="text/javascript">
+    const socket = new WebSocket('ws://localhost:8765');
+
+    socket.addEventListener('message', function (event) {
+      console.log(event);
+      var e = document.getElementById('rcv');
+      e.innerHTML += '<br />' + Date.now() + ': ' + event.data;
+    });
+
+    socket.addEventListener('open', function (event) {
+      socket.send('Hello Server!');
+    });
+
     function send(message) {
-      console.log(message);
+      socket.send(message);
     }
   </script>
 </head>
