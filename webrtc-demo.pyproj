@@ -22,16 +22,16 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="signaling-server\client.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="signaling-server\server.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="webrtc_demo.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="webclient\" />
     <Folder Include="signaling-server\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="webclient\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

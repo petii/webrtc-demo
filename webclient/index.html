@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title>WebRTC Demo</title>
+  <script type="text/javascript">
+    function send(message) {
+      console.log(message);
+    }
+  </script>
+</head>
+<body>
+  <input type="text" id="msg" />
+  <input type="button" onclick="send(document.getElementById('msg').value)" value="send" />
+  <p id="rcv">Recieved:</p>
+</body>
+</html>
