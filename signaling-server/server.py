@@ -1,10 +1,16 @@
 import asyncio
 import websockets
 
+connections = [];
+
 async def echo(websocket, path):
+    print(f'{websocket}: {path}')
+    connections.append(websocket)
     async for message in websocket:
-        print(f'recieved {message}')
-        await websocket.send(message)
+        print(f'recieved {message} from {websocket}')
+        for connection in connections:
+            await connection.send(message)
+        #await websocket.send(message)
 
 start_server = websockets.serve(echo, "localhost", 8765)
 
