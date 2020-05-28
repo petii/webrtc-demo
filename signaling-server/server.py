@@ -9,7 +9,13 @@ async def echo(websocket, path):
     async for message in websocket:
         print(f'recieved {message} from {websocket}')
         for connection in connections:
-            await connection.send(message)
+            if (connection == websocket):
+                continue
+            try:
+                await connection.send(message)
+            except: 
+                print('connection lost most likely')
+                connections.remove(connection);
         #await websocket.send(message)
 
 start_server = websockets.serve(echo, "localhost", 8765)

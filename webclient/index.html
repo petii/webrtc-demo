@@ -3,27 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <title>WebRTC Demo</title>
-  <script type="text/javascript">
-    const socket = new WebSocket('ws://localhost:8765');
-
-    socket.addEventListener('message', function (event) {
-      console.log(event);
-      var e = document.getElementById('rcv');
-      e.innerHTML += '<br />' + Date.now() + ': ' + event.data;
-    });
-
-    socket.addEventListener('open', function (event) {
-      socket.send('Hello Server!');
-    });
-
-    function send(message) {
-      socket.send(message);
-    }
-  </script>
+  <script type="text/javascript" src="logic.js"></script>
 </head>
 <body>
-  <input type="text" id="msg" />
-  <input type="button" onclick="send(document.getElementById('msg').value)" value="send" />
+  <div>
+    <input type="text" id="msg" />
+    <input type="button" value="send"
+           onclick="send(document.getElementById('msg').value)" />
+  </div>
+  <input type="button" onclick="call()" value="call" />
   <p id="rcv">Recieved:</p>
 </body>
 </html>
