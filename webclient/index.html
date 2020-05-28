@@ -7,6 +7,11 @@
 </head>
 <body>
   <div>
+    <audio id="incomingAudio" controls autoplay>
+      <!--<source id="rtcSource" />-->
+    </audio>
+  </div>
+  <div>
     <input type="text" id="msg" />
     <input type="button" value="send"
            onclick="send(document.getElementById('msg').value)" />

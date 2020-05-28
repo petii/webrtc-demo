@@ -27,12 +27,19 @@ socket.addEventListener('open', function (event) {
 var connection = new RTCPeerConnection();
 connection.onnegotiationneeded = async () => {
   var offer = await connection.createOffer()
-  console.log(JSON.stringify(offer));
+  console.log(offer);
   await connection.setLocalDescription(offer);
   socket.send(JSON.stringify({ desc: connection.localDescription }));
 };
 connection.ontrack = (event) => {
   console.log(event);
+  var stream = event.streams[0];
+  console.log(stream);
+  var audioTrack = stream.getAudioTracks()[0];
+  console.log(audioTrack);
+  var player = document.getElementById('incomingAudio');
+  console.log(player);
+  player.srcObject = stream;
 };
 
 function send(message) {
