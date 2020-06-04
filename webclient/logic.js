@@ -16,20 +16,36 @@ socket.addEventListener('message', async (event) => {
   else if (data.desc.type == 'answer') {
     await connection.setRemoteDescription(data.desc);
   }
+  else if (data.desc.type == 'ice') {
+    console.log(data.desc.candidate);
+  }
   else if (data.desc.type == 'message') {
     e.innerHTML += ': ' + data.desc.text;
   }
 });
 socket.addEventListener('open', function (event) {
-  socket.send(JSON.stringify({ desc: {type: "message", text: "hello, world"}}));
+  socket.send(JSON.stringify({ desc: { type: "message", text: "hello, world" } }));
 });
 
 var connection = new RTCPeerConnection();
-connection.onnegotiationneeded = async () => {
+connection.onnegotiationneeded = async (e) => {
+  console.log('nego', e);
   var offer = await connection.createOffer()
   console.log(offer);
   await connection.setLocalDescription(offer);
   socket.send(JSON.stringify({ desc: connection.localDescription }));
+};
+connection.onicecandidate = e => {
+  // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/icecandidate_event
+  // The event handler should transmit the candidate to the remote peer over the signaling channel
+  // so the remote peer can add it to its set of remote candidates.
+  console.log('ice', e);
+  if (e.candidate) {
+    socket.send(JSON.stringify({ desc: { type: "ice", candidate: e.candidate } }));
+  }
+  else {
+    /* there are no more candidates coming during this negotiation */
+  }
 };
 connection.ontrack = (event) => {
   console.log(event);
